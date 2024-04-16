@@ -52,14 +52,43 @@
             width: 100%;
         }
     </style>
+    <script>
+      function hey() {
+          alert("안녕!");
+          // document.getElementById("hello").style.color = "red";
+          $('#hello').html("안녕!");
+      }
+
+      function togglePB() {
+        $('#pb1').toggle("slow");
+      }
+
+      function writeCard() {
+        let card = `<div class="col">
+          <div class="card h-100">
+            <img src="${$('#floatingInput1').val()}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">${$('#floatingInput2').val()}</h5>
+              <p>${stars($('#inputGroupSelect01').val())}</p>
+              <p class="card-text">${$('#floatingInput4').val()}</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-body-secondary">Last updated 3 mins ago</small>
+            </div>
+          </div>
+        </div>`;
+        let temp = $('#mc1').find('.row').last().append(card);
+      }
+
+      function stars(n) {
+        let ret ="";
+        for (let i = 0; i < n; i++) {
+          ret+=("⭐");
+        }
+        return ret;
+      }
+    </script>
 </head>
-<script>
-    function hey() {
-        alert("안녕!");
-        // document.getElementById("hello").style.color = "red";
-        $('#hello').html("안녕!");
-    }
-</script>
 <body class="bg-dark">
     <div>
         <header class="p-3 bg-dark text-white">
@@ -93,23 +122,23 @@
         <div class="container-fluid py-5">
           <h1 class="display-5 fw-bold">신세계</h1>
           <p class="col-md-8 fs-4">경찰청 강 과장은 신입 경찰 자성에게 거대 범죄 조직 골드문의 잠입 수사를 명령한다. 8년이 지나고, 지성은 골드문의 실세 정청의 오른팔까지 되지만 곧 신분이 노출될 위기에 처한다. 하지만 강 과장은 작전의 성공만을 강요한다.</p>
-          <button class="btn btn-outline-light" type="button" onclick="hey()">영화 기록하기</button>
+          <button class="btn btn-outline-light" type="button" onclick="togglePB()">영화 기록하기</button>
           <button class="btn btn-outline-light" type="button">상세정보</button>
         </div>
     </div>
 
-    <div class="mypostbox">
+    <div class="mypostbox" id="pb1">
         <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="floatingInput" placeholder="">
+            <input type="text" class="form-control" id="floatingInput1" placeholder="">
             <label for="floatingInput">영화 이미지 주소</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" placeholder="">
+            <input type="text" class="form-control" id="floatingInput2" placeholder="">
             <label for="floatingInput">영화 제목</label>
         </div>
         <div class="input-group mb-3">
             <label class="input-group-text" for="inputGroupSelect01">별점</label>
-            <select class="form-select">
+            <select class="form-select" id="inputGroupSelect01">
                 <option selected>별점 선택</option>
                 <option value="1">⭐</option>
                 <option value="2">⭐⭐</option>
@@ -119,13 +148,14 @@
             </select>
         </div>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="floatingInput" placeholder="">
+            <input type="text" class="form-control" id="floatingInput4" placeholder="">
             <label for="floatingInput">추천 이유</label>
         </div>
-        <button type="button" class="btn btn-danger text-light">기록하기</button>
+        <button type="button" class="btn btn-danger text-light" onclick="writeCard()">기록하기</button>
     </div>
 
-    <div class="mycards row row-cols-1 row-cols-md-4 g-4">
+    <div class="mycards" id="mc1">
+      <div class="row row-cols-1 row-cols-md-4 g-4">
         <div class="col">
           <div class="card h-100">
             <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg" class="card-img-top" alt="...">
@@ -178,6 +208,7 @@
               </div>
             </div>
         </div>
+      </div>
     </div>
 </body>
 </html>

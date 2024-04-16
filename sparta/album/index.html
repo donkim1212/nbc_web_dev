@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title>Document</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Gugi&display=swap');
@@ -70,37 +71,64 @@
         .mybtn > button {
           margin-right: 10px;
         }
+
     </style>
+    <script>
+      function togglePB() {
+        $('#pb1').toggle("slow");
+      };
+
+      function writeCard() {
+        let card = `<div class="col">
+            <div class="card h-100">
+              <img src="${$('#floatingInput1').val()}" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">${$('#floatingInput2').val()}</h5>
+                <p class="card-text">${$('#floatingTextarea4').val()}</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-body-secondary">${$('#floatingInput3').val()}</small>
+              </div>
+            </div>
+          </div>`;
+        let count = $('#mc1').find('.col').length;
+        console.log(count);
+        // append to the last row
+        let temp = $('#mc1').find('.row').last().append(card);
+        console.log(temp);
+      }
+    </script>
 </head>
+
 <body>
     <div class="wrap">
       <div class="mytitle">
           <h1>나만의 추억 앨범</h1>
-          <button>추억 저장하기</button>
+          <button id="ms1" onclick="togglePB()">추억 저장하기</button>
       </div>
-      <div class="postbox">
+      <div class="postbox" id="pb1" style="display: block;">
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="floatingInput" placeholder="">
-          <label for="floatingInput">앨범 이미지</label>
+          <input type="text" class="form-control" id="floatingInput1" placeholder="">
+          <label for="floatingInput1">앨범 이미지</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="floatingInput" placeholder="">
-          <label for="floatingInput">앨범 제목</label>
+          <input type="text" class="form-control" id="floatingInput2" placeholder="">
+          <label for="floatingInput2">앨범 제목</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="floatingInput" placeholder="">
-          <label for="floatingInput">앨범 날짜</label>
+          <input type="text" class="form-control" id="floatingInput3" placeholder="">
+          <label for="floatingInput3">앨범 날짜</label>
         </div>
         <div class="form-floating mb-3">
-          <textarea class="form-control" id="floatingTextarea"></textarea>
-          <label for="floatingTextarea">앨범 내용</label>
+          <textarea class="form-control" id="floatingTextarea4"></textarea>
+          <label for="floatingTextarea4">앨범 내용</label>
         </div>
         <div class="mybtn">
-          <button type="button" class="btn btn-primary">기록하기</button>
-          <button type="button" class="btn btn-light">닫기</button>
+          <button type="button" class="btn btn-primary" onclick="writeCard()">기록하기</button>
+          <button type="button" class="btn btn-light" onclick="togglePB()">닫기</button>
         </div>
       </div>
-      <div class="mycards">
+      <div class="mycards" id="mc1">
         <div class="row row-cols-1 row-cols-md-4 g-4">
           <div class="col">
             <div class="card h-100">
