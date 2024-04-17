@@ -53,6 +53,15 @@
         }
     </style>
     <script>
+      $(document).ready(function(){
+        fetch("http://spartacodingclub.shop/sparta_api/weather/seoul")
+          .then(res => res.json())
+          .then(data => {
+            let temperature = data['temp'];
+            $('#temperature').append(`${temperature >= 20 ? "더워요" : "추워요"}`);
+          });
+      });
+
       function hey() {
           alert("안녕!");
           // document.getElementById("hello").style.color = "red";
@@ -99,11 +108,11 @@
                 </a>
         
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                  <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-                  <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-                  <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-                  <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-                  <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+                  <li><a href="#" class="nav-link px-2 text-secondary">홈</a></li>
+                  <li><a href="#" class="nav-link px-2 text-white">시리즈</a></li>
+                  <li><a href="#" class="nav-link px-2 text-white">영화</a></li>
+                  <li><a href="#" class="nav-link px-2 text-white">내가 찜한 콘텐츠</a></li>
+                  <li><a href="#" class="nav-link px-2 text-white" id="temperature">현재 서울의 날씨: </a></li>
                 </ul>
         
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
