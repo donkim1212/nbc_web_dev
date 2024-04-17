@@ -73,6 +73,64 @@
         }
 
     </style>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+      import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+      import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+      import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyAmg7aj-z-MUKrA8ULurln1PSm57vnibfc",
+        authDomain: "sparta-c6977.firebaseapp.com",
+        projectId: "sparta-c6977",
+        storageBucket: "sparta-c6977.appspot.com",
+        messagingSenderId: "129201906122",
+        appId: "1:129201906122:web:c077631e48c68af2af2f33"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      $("#writeCard").click(async function () {
+        let imageUrl = $('#floatingInput1').val();
+        let title = $('#floatingInput2').val();
+        let date = $('#floatingInput3').val();
+        let content = $('#floatingTextarea4').val();
+        let doc = {
+          "imageUrl":imageUrl,
+          "title":title,
+          "date":date,
+          "content":content
+        }
+        console.log(doc);
+        await addDoc(collection(db, "albums"), doc);
+        alert("추억이 추가되었습니다!");
+        window.location.reload();
+      });
+      let docs = await getDocs(collection(db, "albums"));
+      docs.forEach((doc) => {
+        let row = doc.data();
+        let imageUrl = row["imageUrl"];
+        let title = row["title"];
+        let content = row["content"];
+        let date = row["date"];
+
+        let card = `<div class="col">
+            <div class="card h-100">
+              <img src="${imageUrl}" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">${title}</h5>
+                <p class="card-text">${content}</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-body-secondary">${date}</small>
+              </div>
+            </div>
+          </div>`;
+        $('#mc1').find('.row').last().append(card);
+      });
+    </script>
     <script>
       $(document).ready(function() {
         fetch("http://spartacodingclub.shop/sparta_api/seoulair")
@@ -106,6 +164,9 @@
         let temp = $('#mc1').find('.row').last().append(card);
         console.log(temp);
       }
+
+      
+      
     </script>
 </head>
 
@@ -134,60 +195,12 @@
           <label for="floatingTextarea4">앨범 내용</label>
         </div>
         <div class="mybtn">
-          <button type="button" class="btn btn-primary" onclick="writeCard()">기록하기</button>
+          <button type="button" class="btn btn-primary" id="writeCard">기록하기</button>
           <button type="button" class="btn btn-light" onclick="togglePB()">닫기</button>
         </div>
       </div>
       <div class="mycards" id="mc1">
         <div class="row row-cols-1 row-cols-md-4 g-4">
-          <div class="col">
-            <div class="card h-100">
-              <img src="./img/bailey-zindel-NRQV-hBF10M-unsplash.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-body-secondary">Last updated 3 mins ago</small>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-100">
-              <img src="./img/mark-harpur-K2s_YE031CA-unsplash.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-body-secondary">Last updated 3 mins ago</small>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-100">
-              <img src="./img/sergey-pesterev-JV78PVf3gGI-unsplash.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-body-secondary">Last updated 3 mins ago</small>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-100">
-              <img src="./img/sergey-pesterev-JV78PVf3gGI-unsplash.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-              </div>
-              <div class="card-footer">
-                <small class="text-body-secondary">Last updated 3 mins ago</small>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
